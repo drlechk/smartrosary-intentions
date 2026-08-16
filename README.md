@@ -8,10 +8,9 @@ editing, import/export, NVS encoding, validation, and BLE upload behavior.
 
 ## Contents
 
-- `packages/*.json` contains publishable intention package source data.
-- `intentions/*.js` contains lightweight localized preview fixtures used by
-  standalone mockup and how-to pages.
-- `intentions.js` registers the browser preview fixture loader.
+- `intentions/*.json` contains single-intention preset source data.
+- `packages/*.json` contains multi-entry publishable intention package source
+  data.
 
 ## Generate Published Binaries
 
@@ -21,7 +20,8 @@ From the intentions editor repository:
 node scripts/generate-intentions-binaries.mjs ../smartrosary-web-installer/intentions
 ```
 
-The editor script reads definitions from this sibling repository by default.
+The editor script reads single presets from `intentions/*.json` and multi-entry
+packages from `packages/*.json` in this sibling repository by default.
 Set `SMARTROSARY_INTENTIONS_DIR` to use a different checkout.
 
 ## Consumers
