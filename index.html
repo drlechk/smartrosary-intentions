@@ -113,10 +113,14 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: 1fr;
       gap: 1rem;
       align-items: start;
       margin-bottom: 1.25rem;
+    }
+
+    .hero > * {
+      min-width: 0;
     }
 
     h1 {
@@ -131,13 +135,15 @@
       color: var(--muted);
       line-height: 1.5;
       max-width: 68ch;
+      overflow-wrap: break-word;
     }
 
     .summary {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 0.7rem;
-      min-width: min(100%, 420px);
+      width: 100%;
+      min-width: 0;
     }
 
     .stat {
@@ -145,6 +151,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.72rem;
+      min-width: 0;
     }
 
     .stat strong {
@@ -159,6 +166,8 @@
       color: var(--muted);
       font-size: 0.82rem;
       line-height: 1.25;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
 
     .tools {
@@ -248,59 +257,11 @@
     }
 
     .preview {
-      display: grid;
-      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
-      gap: 1rem;
-      align-items: start;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1rem;
       min-width: 0;
-    }
-
-    .device {
-      width: min(100%, 260px);
-      aspect-ratio: 1;
-      margin: 0 auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 52%, #152238 0 58%, #0b1220 59% 72%, #050814 73% 100%);
-      box-shadow: inset 0 0 0 8px #1f2b3a, 0 8px 24px #00000026;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 2.3rem 1.65rem 1.4rem;
-    }
-
-    .device-content {
-      width: 100%;
-      max-height: 100%;
-      text-align: center;
-      overflow: auto;
-      scrollbar-width: thin;
-    }
-
-    .device-kicker {
-      font-size: 0.88rem;
-      opacity: 0.78;
-      margin-bottom: 0.45rem;
-    }
-
-    .device-title {
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 0.7rem;
-      overflow-wrap: anywhere;
-    }
-
-    .device-desc {
-      white-space: pre-wrap;
-      font-size: 0.84rem;
-      line-height: 1.25;
-      overflow-wrap: anywhere;
     }
 
     .entry-panel {
@@ -362,14 +323,10 @@
     @media (max-width: 860px) {
       header { align-items: flex-start; }
       .hero,
-      .browser,
-      .preview {
+      .browser {
         grid-template-columns: 1fr;
       }
-      .summary {
-        min-width: 0;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .summary { min-width: 0; }
       .tools {
         grid-template-columns: 1fr;
       }
@@ -409,6 +366,11 @@
         <option value="pl">PL</option>
         <option value="en">EN</option>
         <option value="de">DE</option>
+        <option value="fr">FR</option>
+        <option value="es">ES</option>
+        <option value="it">IT</option>
+        <option value="pt">PT</option>
+        <option value="la">LA</option>
       </select>
     </div>
   </header>
@@ -420,7 +382,7 @@
           <h1 id="pageTitle">Intencje</h1>
           <p class="lead" id="pageLead">Przeglądaj aktualne presety i pakiety intencji z repozytorium SmartRosary.</p>
         </div>
-        <div class="summary" aria-label="Podsumowanie">
+        <div class="summary" id="summaryStats" aria-label="Podsumowanie">
           <div class="stat"><strong id="statItems">0</strong><span id="statItemsLabel">pozycje</span></div>
           <div class="stat"><strong id="statSingles">0</strong><span id="statSinglesLabel">pojedyncze</span></div>
           <div class="stat"><strong id="statPackages">0</strong><span id="statPackagesLabel">pakiety</span></div>
@@ -452,13 +414,6 @@
           <div class="item-list" id="itemList"></div>
         </div>
         <div class="preview" id="preview">
-          <div class="device" aria-hidden="true">
-            <div class="device-content">
-              <div class="device-kicker" id="deviceKicker">Intencja</div>
-              <div class="device-title" id="deviceTitle">-</div>
-              <div class="device-desc" id="deviceDesc"></div>
-            </div>
-          </div>
           <div class="entry-panel">
             <div class="entry-head">
               <div>
@@ -490,6 +445,7 @@
         uiLanguage: 'Język strony',
         pageTitle: 'Intencje',
         pageLead: 'Przeglądaj aktualne presety i pakiety intencji z repozytorium SmartRosary.',
+        summaryLabel: 'Podsumowanie',
         statItems: 'pozycje',
         statSingles: 'pojedyncze',
         statPackages: 'pakiety',
@@ -502,7 +458,6 @@
         search: 'Szukaj',
         searchPlaceholder: 'Tytuł lub treść',
         entrySelect: 'Intencja',
-        deviceKicker: 'Intencja',
         empty: 'Brak intencji do pokazania.',
         source: 'Źródło',
         file: 'Plik',
@@ -517,6 +472,7 @@
         uiLanguage: 'Page language',
         pageTitle: 'Intentions',
         pageLead: 'Browse the current SmartRosary intention presets and packages from this repository.',
+        summaryLabel: 'Summary',
         statItems: 'items',
         statSingles: 'singles',
         statPackages: 'packages',
@@ -529,7 +485,6 @@
         search: 'Search',
         searchPlaceholder: 'Title or text',
         entrySelect: 'Intention',
-        deviceKicker: 'Intention',
         empty: 'No intentions to show.',
         source: 'Source',
         file: 'File',
@@ -544,6 +499,7 @@
         uiLanguage: 'Seitensprache',
         pageTitle: 'Anliegen',
         pageLead: 'Durchsuche die aktuellen SmartRosary-Anliegen und Pakete aus diesem Repository.',
+        summaryLabel: 'Zusammenfassung',
         statItems: 'Einträge',
         statSingles: 'einzeln',
         statPackages: 'Pakete',
@@ -556,7 +512,6 @@
         search: 'Suchen',
         searchPlaceholder: 'Titel oder Text',
         entrySelect: 'Anliegen',
-        deviceKicker: 'Anliegen',
         empty: 'Keine Anliegen zum Anzeigen.',
         source: 'Quelle',
         file: 'Datei',
@@ -566,6 +521,141 @@
         packageType: 'Paket',
         countOne: '1 Anliegen',
         countMany: '{n} Anliegen',
+      },
+      fr: {
+        uiLanguage: 'Langue de la page',
+        pageTitle: 'Intentions',
+        pageLead: 'Parcourez les intentions et les paquets SmartRosary actuels depuis ce dépôt.',
+        summaryLabel: 'Résumé',
+        statItems: 'éléments',
+        statSingles: 'simples',
+        statPackages: 'paquets',
+        statEntries: 'intentions',
+        typeFilter: 'Type',
+        typeAll: 'Tous',
+        typeIntention: 'Simples',
+        typePackage: 'Paquets',
+        itemSelect: 'Élément',
+        search: 'Rechercher',
+        searchPlaceholder: 'Titre ou texte',
+        entrySelect: 'Intention',
+        empty: 'Aucune intention à afficher.',
+        source: 'Source',
+        file: 'Fichier',
+        footer: 'Données générées depuis les fichiers JSON du dépôt.',
+        loadError: 'Impossible de charger les données des intentions.',
+        singleType: 'Simple',
+        packageType: 'Paquet',
+        countOne: '1 intention',
+        countMany: '{n} intentions',
+      },
+      es: {
+        uiLanguage: 'Idioma de la página',
+        pageTitle: 'Intenciones',
+        pageLead: 'Explora las intenciones y paquetes actuales de SmartRosary desde este repositorio.',
+        summaryLabel: 'Resumen',
+        statItems: 'elementos',
+        statSingles: 'individuales',
+        statPackages: 'paquetes',
+        statEntries: 'intenciones',
+        typeFilter: 'Tipo',
+        typeAll: 'Todo',
+        typeIntention: 'Individuales',
+        typePackage: 'Paquetes',
+        itemSelect: 'Elemento',
+        search: 'Buscar',
+        searchPlaceholder: 'Título o texto',
+        entrySelect: 'Intención',
+        empty: 'No hay intenciones para mostrar.',
+        source: 'Fuente',
+        file: 'Archivo',
+        footer: 'Datos generados desde los archivos JSON del repositorio.',
+        loadError: 'No se pudieron cargar los datos de intenciones.',
+        singleType: 'Individual',
+        packageType: 'Paquete',
+        countOne: '1 intención',
+        countMany: '{n} intenciones',
+      },
+      it: {
+        uiLanguage: 'Lingua della pagina',
+        pageTitle: 'Intenzioni',
+        pageLead: 'Sfoglia le intenzioni e i pacchetti SmartRosary attuali da questo repository.',
+        summaryLabel: 'Riepilogo',
+        statItems: 'elementi',
+        statSingles: 'singole',
+        statPackages: 'pacchetti',
+        statEntries: 'intenzioni',
+        typeFilter: 'Tipo',
+        typeAll: 'Tutti',
+        typeIntention: 'Singole',
+        typePackage: 'Pacchetti',
+        itemSelect: 'Elemento',
+        search: 'Cerca',
+        searchPlaceholder: 'Titolo o testo',
+        entrySelect: 'Intenzione',
+        empty: 'Nessuna intenzione da mostrare.',
+        source: 'Sorgente',
+        file: 'File',
+        footer: 'Dati generati dai file JSON del repository.',
+        loadError: 'Impossibile caricare i dati delle intenzioni.',
+        singleType: 'Singola',
+        packageType: 'Pacchetto',
+        countOne: '1 intenzione',
+        countMany: '{n} intenzioni',
+      },
+      pt: {
+        uiLanguage: 'Idioma da página',
+        pageTitle: 'Intenções',
+        pageLead: 'Veja as intenções e os pacotes SmartRosary atuais deste repositório.',
+        summaryLabel: 'Resumo',
+        statItems: 'itens',
+        statSingles: 'individuais',
+        statPackages: 'pacotes',
+        statEntries: 'intenções',
+        typeFilter: 'Tipo',
+        typeAll: 'Todos',
+        typeIntention: 'Individuais',
+        typePackage: 'Pacotes',
+        itemSelect: 'Item',
+        search: 'Pesquisar',
+        searchPlaceholder: 'Título ou texto',
+        entrySelect: 'Intenção',
+        empty: 'Nenhuma intenção para mostrar.',
+        source: 'Fonte',
+        file: 'Arquivo',
+        footer: 'Dados gerados a partir dos arquivos JSON do repositório.',
+        loadError: 'Não foi possível carregar os dados de intenções.',
+        singleType: 'Individual',
+        packageType: 'Pacote',
+        countOne: '1 intenção',
+        countMany: '{n} intenções',
+      },
+      la: {
+        uiLanguage: 'Lingua paginae',
+        pageTitle: 'Intentiones',
+        pageLead: 'Inspice intentiones et fasciculos SmartRosary ex hoc repositorio.',
+        summaryLabel: 'Summarium',
+        statItems: 'res',
+        statSingles: 'singulae',
+        statPackages: 'fasciculi',
+        statEntries: 'intentiones',
+        typeFilter: 'Genus',
+        typeAll: 'Omnia',
+        typeIntention: 'Singulae',
+        typePackage: 'Fasciculi',
+        itemSelect: 'Res',
+        search: 'Quaere',
+        searchPlaceholder: 'Titulus vel textus',
+        entrySelect: 'Intentio',
+        empty: 'Nullae intentiones ostendendae.',
+        source: 'Fons',
+        file: 'Archivum',
+        footer: 'Data ex fasciculis JSON repositorii generata.',
+        loadError: 'Data intentionum legi non potuerunt.',
+        singleType: 'Singula',
+        packageType: 'Fasciculus',
+        countOne: '1 intentio',
+        countMany: '{n} intentiones',
       },
     };
 
@@ -599,6 +689,7 @@
       $('uiLanguage').setAttribute('aria-label', t('uiLanguage'));
       $('pageTitle').textContent = t('pageTitle');
       $('pageLead').textContent = t('pageLead');
+      $('summaryStats').setAttribute('aria-label', t('summaryLabel'));
       $('statItemsLabel').textContent = t('statItems');
       $('statSinglesLabel').textContent = t('statSingles');
       $('statPackagesLabel').textContent = t('statPackages');
@@ -611,7 +702,6 @@
       $('searchLabel').textContent = t('search');
       $('search').placeholder = t('searchPlaceholder');
       $('entrySelectLabel').textContent = t('entrySelect');
-      $('deviceKicker').textContent = t('deviceKicker');
       $('emptyState').textContent = t('empty');
       render();
     }
@@ -706,8 +796,6 @@
       $('typeBadge').textContent = `${typeLabel(item.type)} · ${countLabel(item.count)}`;
       $('entryTitle').textContent = entry.title;
       $('entryDesc').textContent = entry.desc;
-      $('deviceTitle').textContent = entry.title;
-      $('deviceDesc').textContent = entry.desc;
       $('sourceFile').textContent = `${t('source')}: ${item.source}`;
       $('fileName').textContent = `${t('file')}: ${item.filename}`;
     }
