@@ -1,0 +1,174 @@
+{
+  "summary": {
+    "items": 3,
+    "singles": 1,
+    "packages": 2,
+    "entries": 25
+  },
+  "items": [
+    {
+      "id": "duchowa-adopcja",
+      "label": "Duchowa Adopcja",
+      "type": "intention",
+      "typeLabel": "Single intention",
+      "source": "intentions/duchowa-adopcja.json",
+      "filename": "nvs-intentions-duchowa-adopcja.bin",
+      "format": "smartrosary-intention-v1",
+      "count": 1,
+      "countLabel": "1 intention",
+      "entries": [
+        {
+          "index": 1,
+          "title": "Duchowa Adopcja",
+          "desc": "Panie Jezu, za wstawien-\nnictwem Twojej Matki,\nMaryi, która urodziła Cię z\nmiłością, oraz za wstawien-\nnictwem św. Józefa, czło-\nwieka zawierzenia, który\nopiekował się Tobą po\nnarodzeniu, proszę Cię\nw intencji tego\nnienarodzonego dziecka,\nktóre duchowo adoptowa-\nłem, a które znajduje się w\nniebezpieczeństwie\nzagłady. Proszę, daj\nrodzicom miłość i\nodwagę, aby swoje\ndziecko pozostawili\nprzy życiu, które\nTy sam mu\nprzeznaczyłeś.\nAmen"
+        }
+      ]
+    },
+    {
+      "id": "pmkdus-2025",
+      "label": "Żywy Różaniec 2025 (PMK Düsseldorf)",
+      "type": "package",
+      "typeLabel": "Package",
+      "source": "packages/pmkdus-2025.json",
+      "filename": "nvs-intentions-pmkdus-2025.bin",
+      "format": "smartrosary-intentions-v1",
+      "count": 12,
+      "countLabel": "12 intentions",
+      "entries": [
+        {
+          "index": 1,
+          "title": "Styczeń 2025",
+          "desc": "Módlmy się, aby zawsze\nszanowano niezbędne\nw budowaniu lepszego\nświata prawo migrantów,\nuchodźców i osób\ndotkniętych wojną\ndo edukacji."
+        },
+        {
+          "index": 2,
+          "title": "Luty 2025",
+          "desc": "Módlmy się, aby wspól-\nnota kościelna wspo-\nmagała pragnienia mło-\ndych ludzi, czujących\npowołanie do służenia\nmisji Chrystusa w\nżyciu kapłańskim\ni zakonnym."
+        },
+        {
+          "index": 3,
+          "title": "Marzec 2025",
+          "desc": "Módlmy się, aby rodziny\nrozbite znalazły uzdro-\nwienie swoich ran w\nprzebaczeniu, odkry-\nwając na nowo wzajemne\nbogactwo nawet w\ndzielących je\nróżnicach."
+        },
+        {
+          "index": 4,
+          "title": "Kwiecień 2025",
+          "desc": "Módlmy się, aby korzys-\ntanie z nowych technologii\nnie zastępowało relacji\nmiędzyludzkich, szano-\nwało godność człowieka\ni pomagało stawić\nczoła kryzysom\nnaszych czasów."
+        },
+        {
+          "index": 5,
+          "title": "Maj 2025",
+          "desc": "Módlmy się, aby przez\npracę każdy człowiek\nmógł znaleźć spełnienie,\nrodziny godne wsparcie,\na społeczeństwo stało\nsię bardziej ludzkie."
+        },
+        {
+          "index": 6,
+          "title": "Czerwiec 2025",
+          "desc": "Módlmy się, aby każdy\nz nas znalazł pocieszenie\nw osobistej relacj\nz Jezusem i od Jego\nserca uczył się\nwspółczucia dla\nświata."
+        },
+        {
+          "index": 7,
+          "title": "Lipiec 2025",
+          "desc": "Módlmy się, abyśmy\ncoraz bardziej posiedli\numiejętność rozeznania,\numiejętność wybierania\ndróg życia i odrzucania\nwszystkiego, co oddzie-\nla nas od Chrystusa\ni Ewangelii."
+        },
+        {
+          "index": 8,
+          "title": "Sierpień 2025",
+          "desc": "Módlmy się, aby społe-\nczeństwa, w których\nwspółżycie między ludźmi\nwydaje się być trudne,\nnie ulegały pokusom kon-\nfliktów etnicznych, reli-\ngijnych lub\nideologicznych."
+        },
+        {
+          "index": 9,
+          "title": "Wrzesień 2025",
+          "desc": "Módlmy się, abyśmy,\nnatchnieni przez Świętego\nFranciszka, doświadczyli\nwzajemnej więzi ze wszyst-\nkimi stworzeniami,\nkochanymi przez Boga\ni godnymi\nszacunku."
+        },
+        {
+          "index": 10,
+          "title": "Październik 2025",
+          "desc": "Módlmy się, aby wie-\nrzący z różnych tradycji\nreligijnych współpracowali\nw obronie i promocji po-\nkoju, sprawiedliwości\ni ludzkiego\nbraterstwa."
+        },
+        {
+          "index": 11,
+          "title": "Listopad 2025",
+          "desc": "Módlmy się, aby osoby,\nktóre próbowały popełnić\nsamobójstwo, znalazły\nwsparcie, pomoc i miłość,\nktórych potrzebują, aby\nw swojej społeczności\notworzyły się na\npiękno życia."
+        },
+        {
+          "index": 12,
+          "title": "Grudzień 2025",
+          "desc": "Módlmy się, aby chrze-\nścijanie żyjący na terenach\nogarniętych wojną i konflik-\ntem, szczególnie na Bliskim\nWschodzie, byli nasio-\nnami pokoju, pojed-\nnania i nadziei."
+        }
+      ]
+    },
+    {
+      "id": "pmkdus-2026",
+      "label": "Żywy Różaniec 2026 (PMK Düsseldorf)",
+      "type": "package",
+      "typeLabel": "Package",
+      "source": "packages/pmkdus-2026.json",
+      "filename": "nvs-intentions-pmkdus-2026.bin",
+      "format": "smartrosary-intentions-v1",
+      "count": 12,
+      "countLabel": "12 intentions",
+      "entries": [
+        {
+          "index": 1,
+          "title": "Styczeń 2026",
+          "desc": "Módlmy się, aby modlitwa\nSłowem Bożym była poka-\nrmem dla naszego życia i\nźródłem nadziei w naszych\nwspólnotach, pomagając\nnam budować Kościół\nbardziej braterski i\nmisyjny."
+        },
+        {
+          "index": 2,
+          "title": "Luty 2026",
+          "desc": "Módlmy się, aby dzieci cier-\npiące na nieuleczalne\nchoroby i ich rodziny otrzy-\nmały niezbędną opiekę\nmedyczną i wsparcie oraz\nnigdy nie traciły sił i\nnadziei."
+        },
+        {
+          "index": 3,
+          "title": "Marzec 2026",
+          "desc": "Módlmy się, aby narody\ndążyły do skutecznego rozb-\nrojenia, zwłaszcza nuklear-\nnego, i aby światowi przy-\nwódcy wybierali drogę\ndialogu i dyplomacji\nzamiast przemocy."
+        },
+        {
+          "index": 4,
+          "title": "Kwiecień 2026",
+          "desc": "Módlmy się za kapłanów\nprzeżywających kryzys w\nswoim powołaniu, aby znal-\neźli towarzyszenie duchowe,\nktórego potrzebują, i aby\nwspólnoty wspierały ich\nw duchu zrozumienia i\nmodlitwy."
+        },
+        {
+          "index": 5,
+          "title": "Maj 2026",
+          "desc": "Módlmy się, aby wszyscy –\nod dużych producentów po\ndrobnych konsumentów –\nunikali marnowania\nżywności i dążyli do zapew-\nnienia każdemu dostępu\ndo pożywienia dobrej\njakości."
+        },
+        {
+          "index": 6,
+          "title": "Czerwiec 2026",
+          "desc": "Módlmy się, aby sport był\nnarzędziem pokoju, spotk-\nania i dialogu między kultu-\nrami i narodami oraz prom-\nował takie wartości jak\nszacunek, solidarność i\nrozwój osobisty."
+        },
+        {
+          "index": 7,
+          "title": "Lipiec 2026",
+          "desc": "Módlmy się o poszanowanie\ni ochronę życia ludzkiego na\nwszystkich jego etapach,\nuznając w nim dar od\nBoga."
+        },
+        {
+          "index": 8,
+          "title": "Sierpień 2026",
+          "desc": "Módlmy się, abyśmy w\ndużych miastach, często\nnaznaczonych anonimowo-\nścią i samotnością, znaleźli\nnowe sposoby głoszenia\nEwangelii, odkrywając\ntwórcze ścieżki budo-\nwania wspólnoty."
+        },
+        {
+          "index": 9,
+          "title": "Wrzesień 2026",
+          "desc": "Módlmy się o sprawiedliwe i\nzrównoważone zarządzanie\nwodą, zasobem niezbędnym\ndo życia, aby każdy miał do\nniej równy dostęp."
+        },
+        {
+          "index": 10,
+          "title": "Październik 2026",
+          "desc": "Módlmy się o ustanowienie\nw całym Kościele duszpa-\nsterstwa zdrowia psychicz-\nnego, pomagającego prze-\nzwyciężyć stygmatyzację i\ndyskryminację osób z\nchorobami psychicz-\nnymi."
+        },
+        {
+          "index": 11,
+          "title": "Listopad 2026",
+          "desc": "Módlmy się, aby bogactwa\nbyły wykorzystywane właśc-\niwie, nie ulegając pokusie\negoizmu, lecz zawsze służąc\ndobru wspólnemu i soli-\ndarności z tymi, którzy\nmają mniej."
+        },
+        {
+          "index": 12,
+          "title": "Grudzień 2026",
+          "desc": "Módlmy się za rodziny\ndoświadczające braku obec-\nności matki lub ojca, aby\nznajdowały wsparcie i towa-\nrzyszenie w Kościele oraz\npomoc i siłę w wierze w\ntrudnych chwilach."
+        }
+      ]
+    }
+  ]
+}

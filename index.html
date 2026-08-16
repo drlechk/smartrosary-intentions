@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Rosary Intentions</title>
+  <meta name="description" content="Podgląd intencji Smart Rosary generowany z aktualnego repozytorium intencji.">
+  <style>
+    :root {
+      --bg: linear-gradient(180deg, #0f5aa0 0%, #0b4f8f 55%, #09457e 100%);
+      --text: #14223d;
+      --muted: #5b6b86;
+      --surface: #ffffff;
+      --surface-soft: #f3f8fd;
+      --panel: #ffffffdc;
+      --border: #b7d6f5;
+      --accent: #0974cc;
+      --accent-dark: #075b9f;
+      --accent-contrast: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem;
+    }
+
+    .home-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    header label { color: #fff; }
+
+    select,
+    input[type="search"] {
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      padding: 0.48rem 0.65rem;
+    }
+
+    header select {
+      width: auto;
+      min-width: 76px;
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.62);
+    }
+
+    select option { color: #111827; }
+    select:focus,
+    input[type="search"]:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 3rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px #00000014;
+      backdrop-filter: blur(6px);
+      padding: 1.4rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      margin: 0 0 0.45rem;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 68ch;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.7rem;
+      min-width: min(100%, 420px);
+    }
+
+    .stat {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.72rem;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 0.24rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.25;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: minmax(170px, 220px) minmax(170px, 220px) minmax(0, 1fr);
+      gap: 0.85rem;
+      align-items: end;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.34rem;
+      min-width: 0;
+    }
+
+    .browser {
+      display: grid;
+      grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .item-list {
+      display: grid;
+      gap: 0.55rem;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 0.25rem;
+    }
+
+    .item-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 0.75rem;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .item-button:hover,
+    .item-button:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .item-button[aria-selected="true"] {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
+    .item-title {
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+      justify-content: space-between;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .item-meta {
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--accent-dark);
+      background: var(--surface-soft);
+      font-size: 0.75rem;
+      line-height: 1;
+      padding: 0.25rem 0.45rem;
+      white-space: nowrap;
+    }
+
+    .preview {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      min-width: 0;
+    }
+
+    .device {
+      width: min(100%, 260px);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 52%, #152238 0 58%, #0b1220 59% 72%, #050814 73% 100%);
+      box-shadow: inset 0 0 0 8px #1f2b3a, 0 8px 24px #00000026;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 2.3rem 1.65rem 1.4rem;
+    }
+
+    .device-content {
+      width: 100%;
+      max-height: 100%;
+      text-align: center;
+      overflow: auto;
+      scrollbar-width: thin;
+    }
+
+    .device-kicker {
+      font-size: 0.88rem;
+      opacity: 0.78;
+      margin-bottom: 0.45rem;
+    }
+
+    .device-title {
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.7rem;
+      overflow-wrap: anywhere;
+    }
+
+    .device-desc {
+      white-space: pre-wrap;
+      font-size: 0.84rem;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .entry-panel {
+      min-width: 0;
+    }
+
+    .entry-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+    }
+
+    .entry-select-wrap {
+      min-width: 160px;
+      max-width: 260px;
+    }
+
+    .body-text {
+      white-space: pre-wrap;
+      line-height: 1.55;
+      margin: 0;
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .source {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .empty {
+      padding: 1rem;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    footer {
+      text-align: center;
+      color: #dceeff;
+      font-size: 0.82rem;
+      padding: 0 1rem 1rem;
+    }
+
+    @media (max-width: 860px) {
+      header { align-items: flex-start; }
+      .hero,
+      .browser,
+      .preview {
+        grid-template-columns: 1fr;
+      }
+      .summary {
+        min-width: 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .tools {
+        grid-template-columns: 1fr;
+      }
+      .item-list {
+        max-height: 360px;
+      }
+      .entry-head {
+        display: grid;
+      }
+      .entry-select-wrap {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        display: grid;
+      }
+      .header-controls {
+        justify-content: flex-start;
+      }
+      .panel {
+        padding: 1rem;
+      }
+      .summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="home-link" href="./">Smart Rosary Intentions</a>
+    <div class="header-controls">
+      <label for="uiLanguage" id="uiLanguageLabel">Język strony</label>
+      <select id="uiLanguage" aria-label="Język strony">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="hero">
+        <div>
+          <h1 id="pageTitle">Intencje</h1>
+          <p class="lead" id="pageLead">Przeglądaj aktualne presety i pakiety intencji z repozytorium SmartRosary.</p>
+        </div>
+        <div class="summary" aria-label="Podsumowanie">
+          <div class="stat"><strong id="statItems">0</strong><span id="statItemsLabel">pozycje</span></div>
+          <div class="stat"><strong id="statSingles">0</strong><span id="statSinglesLabel">pojedyncze</span></div>
+          <div class="stat"><strong id="statPackages">0</strong><span id="statPackagesLabel">pakiety</span></div>
+          <div class="stat"><strong id="statEntries">0</strong><span id="statEntriesLabel">intencje</span></div>
+        </div>
+      </div>
+
+      <div class="tools">
+        <div class="field">
+          <label for="typeFilter" id="typeFilterLabel">Typ</label>
+          <select id="typeFilter">
+            <option value="all">Wszystkie</option>
+            <option value="intention">Pojedyncze</option>
+            <option value="package">Pakiety</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="itemSelect" id="itemSelectLabel">Pozycja</label>
+          <select id="itemSelect"></select>
+        </div>
+        <div class="field">
+          <label for="search" id="searchLabel">Szukaj</label>
+          <input id="search" type="search" placeholder="Tytuł lub treść">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div>
+          <div class="item-list" id="itemList"></div>
+        </div>
+        <div class="preview" id="preview">
+          <div class="device" aria-hidden="true">
+            <div class="device-content">
+              <div class="device-kicker" id="deviceKicker">Intencja</div>
+              <div class="device-title" id="deviceTitle">-</div>
+              <div class="device-desc" id="deviceDesc"></div>
+            </div>
+          </div>
+          <div class="entry-panel">
+            <div class="entry-head">
+              <div>
+                <span class="badge" id="typeBadge">-</span>
+                <h2 id="entryTitle">-</h2>
+              </div>
+              <div class="field entry-select-wrap">
+                <label for="entrySelect" id="entrySelectLabel">Intencja</label>
+                <select id="entrySelect"></select>
+              </div>
+            </div>
+            <p class="body-text" id="entryDesc"></p>
+            <div class="source">
+              <span id="sourceFile"></span>
+              <span id="fileName"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="empty" id="emptyState" hidden>Brak intencji do pokazania.</div>
+    </section>
+  </main>
+
+  <footer id="footerText"></footer>
+
+  <script>
+    const translations = {
+      pl: {
+        uiLanguage: 'Język strony',
+        pageTitle: 'Intencje',
+        pageLead: 'Przeglądaj aktualne presety i pakiety intencji z repozytorium SmartRosary.',
+        statItems: 'pozycje',
+        statSingles: 'pojedyncze',
+        statPackages: 'pakiety',
+        statEntries: 'intencje',
+        typeFilter: 'Typ',
+        typeAll: 'Wszystkie',
+        typeIntention: 'Pojedyncze',
+        typePackage: 'Pakiety',
+        itemSelect: 'Pozycja',
+        search: 'Szukaj',
+        searchPlaceholder: 'Tytuł lub treść',
+        entrySelect: 'Intencja',
+        deviceKicker: 'Intencja',
+        empty: 'Brak intencji do pokazania.',
+        source: 'Źródło',
+        file: 'Plik',
+        footer: 'Dane wygenerowane z plików JSON repozytorium.',
+        loadError: 'Nie udało się wczytać danych intencji.',
+        singleType: 'Pojedyncza',
+        packageType: 'Pakiet',
+        countOne: '1 intencja',
+        countMany: '{n} intencji',
+      },
+      en: {
+        uiLanguage: 'Page language',
+        pageTitle: 'Intentions',
+        pageLead: 'Browse the current SmartRosary intention presets and packages from this repository.',
+        statItems: 'items',
+        statSingles: 'singles',
+        statPackages: 'packages',
+        statEntries: 'intentions',
+        typeFilter: 'Type',
+        typeAll: 'All',
+        typeIntention: 'Singles',
+        typePackage: 'Packages',
+        itemSelect: 'Item',
+        search: 'Search',
+        searchPlaceholder: 'Title or text',
+        entrySelect: 'Intention',
+        deviceKicker: 'Intention',
+        empty: 'No intentions to show.',
+        source: 'Source',
+        file: 'File',
+        footer: 'Data generated from repository JSON files.',
+        loadError: 'Could not load intentions data.',
+        singleType: 'Single',
+        packageType: 'Package',
+        countOne: '1 intention',
+        countMany: '{n} intentions',
+      },
+      de: {
+        uiLanguage: 'Seitensprache',
+        pageTitle: 'Anliegen',
+        pageLead: 'Durchsuche die aktuellen SmartRosary-Anliegen und Pakete aus diesem Repository.',
+        statItems: 'Einträge',
+        statSingles: 'einzeln',
+        statPackages: 'Pakete',
+        statEntries: 'Anliegen',
+        typeFilter: 'Typ',
+        typeAll: 'Alle',
+        typeIntention: 'Einzeln',
+        typePackage: 'Pakete',
+        itemSelect: 'Eintrag',
+        search: 'Suchen',
+        searchPlaceholder: 'Titel oder Text',
+        entrySelect: 'Anliegen',
+        deviceKicker: 'Anliegen',
+        empty: 'Keine Anliegen zum Anzeigen.',
+        source: 'Quelle',
+        file: 'Datei',
+        footer: 'Daten aus den JSON-Dateien des Repositorys erzeugt.',
+        loadError: 'Anliegen-Daten konnten nicht geladen werden.',
+        singleType: 'Einzeln',
+        packageType: 'Paket',
+        countOne: '1 Anliegen',
+        countMany: '{n} Anliegen',
+      },
+    };
+
+    const state = {
+      lang: 'pl',
+      data: null,
+      items: [],
+      selectedId: '',
+      selectedEntry: 0,
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function t(key, vars = {}) {
+      const dict = translations[state.lang] || translations.en;
+      return String(dict[key] ?? translations.en[key] ?? key)
+        .replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ''));
+    }
+
+    function countLabel(count) {
+      return count === 1 ? t('countOne') : t('countMany', { n: count });
+    }
+
+    function typeLabel(type) {
+      return type === 'intention' ? t('singleType') : t('packageType');
+    }
+
+    function applyTranslations() {
+      document.documentElement.lang = state.lang;
+      $('uiLanguageLabel').textContent = t('uiLanguage');
+      $('uiLanguage').setAttribute('aria-label', t('uiLanguage'));
+      $('pageTitle').textContent = t('pageTitle');
+      $('pageLead').textContent = t('pageLead');
+      $('statItemsLabel').textContent = t('statItems');
+      $('statSinglesLabel').textContent = t('statSingles');
+      $('statPackagesLabel').textContent = t('statPackages');
+      $('statEntriesLabel').textContent = t('statEntries');
+      $('typeFilterLabel').textContent = t('typeFilter');
+      $('typeFilter').options[0].textContent = t('typeAll');
+      $('typeFilter').options[1].textContent = t('typeIntention');
+      $('typeFilter').options[2].textContent = t('typePackage');
+      $('itemSelectLabel').textContent = t('itemSelect');
+      $('searchLabel').textContent = t('search');
+      $('search').placeholder = t('searchPlaceholder');
+      $('entrySelectLabel').textContent = t('entrySelect');
+      $('deviceKicker').textContent = t('deviceKicker');
+      $('emptyState').textContent = t('empty');
+      render();
+    }
+
+    function searchableText(item) {
+      return [
+        item.label,
+        item.id,
+        item.source,
+        ...item.entries.flatMap((entry) => [entry.title, entry.desc]),
+      ].join('\n').toLowerCase();
+    }
+
+    function filteredItems() {
+      const type = $('typeFilter').value;
+      const query = $('search').value.trim().toLowerCase();
+      return state.items.filter((item) => {
+        if (type !== 'all' && item.type !== type) return false;
+        if (query && !searchableText(item).includes(query)) return false;
+        return true;
+      });
+    }
+
+    function setSelectedItem(id) {
+      state.selectedId = id;
+      state.selectedEntry = 0;
+      render();
+    }
+
+    function setSummary() {
+      const summary = state.data?.summary || {};
+      $('statItems').textContent = summary.items ?? 0;
+      $('statSingles').textContent = summary.singles ?? 0;
+      $('statPackages').textContent = summary.packages ?? 0;
+      $('statEntries').textContent = summary.entries ?? 0;
+      $('footerText').textContent = t('footer');
+    }
+
+    function renderItemSelect(items) {
+      const select = $('itemSelect');
+      select.innerHTML = '';
+      for (const item of items) {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.label;
+        select.appendChild(option);
+      }
+      select.value = items.some((item) => item.id === state.selectedId)
+        ? state.selectedId
+        : (items[0]?.id || '');
+      state.selectedId = select.value;
+    }
+
+    function renderItemList(items) {
+      const list = $('itemList');
+      list.innerHTML = '';
+      for (const item of items) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'item-button';
+        button.setAttribute('aria-selected', String(item.id === state.selectedId));
+        button.innerHTML = `
+          <div class="item-title">
+            <span>${escapeHtml(item.label)}</span>
+            <span class="badge">${escapeHtml(typeLabel(item.type))}</span>
+          </div>
+          <div class="item-meta">${escapeHtml(countLabel(item.count))} · ${escapeHtml(item.source)}</div>
+        `;
+        button.addEventListener('click', () => setSelectedItem(item.id));
+        list.appendChild(button);
+      }
+    }
+
+    function renderEntrySelect(item) {
+      const select = $('entrySelect');
+      select.innerHTML = '';
+      item.entries.forEach((entry, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = `${entry.index}. ${entry.title}`;
+        select.appendChild(option);
+      });
+      state.selectedEntry = Math.min(state.selectedEntry, Math.max(item.entries.length - 1, 0));
+      select.value = String(state.selectedEntry);
+      select.disabled = item.entries.length <= 1;
+    }
+
+    function renderPreview(item) {
+      if (!item) return;
+      renderEntrySelect(item);
+      const entry = item.entries[state.selectedEntry] || item.entries[0] || { title: '-', desc: '' };
+      $('typeBadge').textContent = `${typeLabel(item.type)} · ${countLabel(item.count)}`;
+      $('entryTitle').textContent = entry.title;
+      $('entryDesc').textContent = entry.desc;
+      $('deviceTitle').textContent = entry.title;
+      $('deviceDesc').textContent = entry.desc;
+      $('sourceFile').textContent = `${t('source')}: ${item.source}`;
+      $('fileName').textContent = `${t('file')}: ${item.filename}`;
+    }
+
+    function render() {
+      if (!state.data) return;
+      setSummary();
+      const items = filteredItems();
+      $('emptyState').hidden = items.length > 0;
+      $('preview').hidden = items.length === 0;
+      renderItemSelect(items);
+      renderItemList(items);
+      renderPreview(items.find((item) => item.id === state.selectedId) || items[0]);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch('intentions-data.json', { cache: 'no-cache' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        state.data = await response.json();
+        state.items = Array.isArray(state.data.items) ? state.data.items : [];
+        state.selectedId = state.items[0]?.id || '';
+        applyTranslations();
+      } catch (error) {
+        console.error(error);
+        $('emptyState').hidden = false;
+        $('preview').hidden = true;
+        $('emptyState').textContent = t('loadError');
+      }
+    }
+
+    $('uiLanguage').addEventListener('change', (event) => {
+      state.lang = event.target.value;
+      applyTranslations();
+    });
+    $('typeFilter').addEventListener('change', render);
+    $('search').addEventListener('input', render);
+    $('itemSelect').addEventListener('change', (event) => setSelectedItem(event.target.value));
+    $('entrySelect').addEventListener('change', (event) => {
+      state.selectedEntry = Number(event.target.value) || 0;
+      render();
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
