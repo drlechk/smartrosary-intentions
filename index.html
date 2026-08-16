@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Smart Rosary Intentions</title>
   <meta name="description" content="Podgląd intencji Smart Rosary generowany z aktualnego repozytorium intencji.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
       --bg: linear-gradient(180deg, #0f5aa0 0%, #0b4f8f 55%, #09457e 100%);
@@ -37,26 +38,30 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
       padding: 1rem 1.25rem;
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
     }
 
     .home-link {
       color: #fff;
       text-decoration: none;
-      font-weight: 800;
-      letter-spacing: 0;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       white-space: nowrap;
     }
 
-    .header-controls {
+    .home-link img { width: 28px; height: 28px; }
+
+    .selector-row {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 0.75rem;
       flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
     label {
@@ -95,20 +100,22 @@
     }
 
     main {
+      display: grid;
+      place-items: start center;
       flex: 1;
       width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
       padding: 1rem 1.25rem 3rem;
     }
 
     .panel {
+      width: 100%;
+      max-width: 1120px;
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 16px;
       box-shadow: 0 10px 30px #00000014;
       backdrop-filter: blur(6px);
-      padding: 1.4rem;
+      padding: 2rem;
     }
 
     .hero {
@@ -314,10 +321,27 @@
     }
 
     footer {
+      padding: 1rem 1.25rem;
       text-align: center;
-      color: #dceeff;
-      font-size: 0.82rem;
-      padding: 0 1rem 1rem;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: inherit;
+      margin-left: 0.75rem;
+      text-underline-offset: 0.2em;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    .deploy-info {
+      margin-top: 0.35rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      opacity: 0.78;
     }
 
     @media (max-width: 860px) {
@@ -345,7 +369,7 @@
       header {
         display: grid;
       }
-      .header-controls {
+      .selector-row {
         justify-content: flex-start;
       }
       .panel {
@@ -354,14 +378,24 @@
       .summary {
         grid-template-columns: 1fr;
       }
+      footer a {
+        display: block;
+        margin: 0.35rem 0 0;
+      }
+      .deploy-info {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <a class="home-link" href="./">Smart Rosary Intentions</a>
-    <div class="header-controls">
-      <label for="uiLanguage" id="uiLanguageLabel">Język strony</label>
+    <a class="home-link" href="https://drlechk.github.io/smartrosary/" target="_blank" rel="noopener">
+      <img src="favicon.svg" alt="" role="presentation">
+      <span>Smart Rosary</span>
+    </a>
+    <div class="selector-row">
+      <label for="uiLanguage" id="uiLanguageLabel">Język strony:</label>
       <select id="uiLanguage" aria-label="Język strony">
         <option value="pl">PL</option>
         <option value="en">EN</option>
@@ -437,12 +471,16 @@
     </section>
   </main>
 
-  <footer id="footerText"></footer>
+  <footer>
+    <span>© 2026 SmartRosary</span>
+    <a href="https://github.com/drlechk/smartrosary-intentions" target="_blank" rel="noopener">GitHub</a>
+    <div id="deployInfo" class="deploy-info" aria-label="Ostatnie wdrożenie"></div>
+  </footer>
 
   <script>
     const translations = {
       pl: {
-        uiLanguage: 'Język strony',
+        uiLanguage: 'Język strony:',
         pageTitle: 'Intencje',
         pageLead: 'Przeglądaj aktualne presety i pakiety intencji z repozytorium SmartRosary.',
         summaryLabel: 'Podsumowanie',
@@ -462,6 +500,7 @@
         source: 'Źródło',
         file: 'Plik',
         footer: 'Dane wygenerowane z plików JSON repozytorium.',
+        deployLabel: 'Ostatnie wdrożenie',
         loadError: 'Nie udało się wczytać danych intencji.',
         singleType: 'Pojedyncza',
         packageType: 'Pakiet',
@@ -469,7 +508,7 @@
         countMany: '{n} intencji',
       },
       en: {
-        uiLanguage: 'Page language',
+        uiLanguage: 'Page language:',
         pageTitle: 'Intentions',
         pageLead: 'Browse the current SmartRosary intention presets and packages from this repository.',
         summaryLabel: 'Summary',
@@ -489,6 +528,7 @@
         source: 'Source',
         file: 'File',
         footer: 'Data generated from repository JSON files.',
+        deployLabel: 'Last deploy',
         loadError: 'Could not load intentions data.',
         singleType: 'Single',
         packageType: 'Package',
@@ -496,7 +536,7 @@
         countMany: '{n} intentions',
       },
       de: {
-        uiLanguage: 'Seitensprache',
+        uiLanguage: 'Seitensprache:',
         pageTitle: 'Anliegen',
         pageLead: 'Durchsuche die aktuellen SmartRosary-Anliegen und Pakete aus diesem Repository.',
         summaryLabel: 'Zusammenfassung',
@@ -516,6 +556,7 @@
         source: 'Quelle',
         file: 'Datei',
         footer: 'Daten aus den JSON-Dateien des Repositorys erzeugt.',
+        deployLabel: 'Letztes Deployment',
         loadError: 'Anliegen-Daten konnten nicht geladen werden.',
         singleType: 'Einzeln',
         packageType: 'Paket',
@@ -523,7 +564,7 @@
         countMany: '{n} Anliegen',
       },
       fr: {
-        uiLanguage: 'Langue de la page',
+        uiLanguage: 'Langue de la page :',
         pageTitle: 'Intentions',
         pageLead: 'Parcourez les intentions et les paquets SmartRosary actuels depuis ce dépôt.',
         summaryLabel: 'Résumé',
@@ -543,6 +584,7 @@
         source: 'Source',
         file: 'Fichier',
         footer: 'Données générées depuis les fichiers JSON du dépôt.',
+        deployLabel: 'Dernier déploiement',
         loadError: 'Impossible de charger les données des intentions.',
         singleType: 'Simple',
         packageType: 'Paquet',
@@ -550,7 +592,7 @@
         countMany: '{n} intentions',
       },
       es: {
-        uiLanguage: 'Idioma de la página',
+        uiLanguage: 'Idioma de la página:',
         pageTitle: 'Intenciones',
         pageLead: 'Explora las intenciones y paquetes actuales de SmartRosary desde este repositorio.',
         summaryLabel: 'Resumen',
@@ -570,6 +612,7 @@
         source: 'Fuente',
         file: 'Archivo',
         footer: 'Datos generados desde los archivos JSON del repositorio.',
+        deployLabel: 'Último despliegue',
         loadError: 'No se pudieron cargar los datos de intenciones.',
         singleType: 'Individual',
         packageType: 'Paquete',
@@ -577,7 +620,7 @@
         countMany: '{n} intenciones',
       },
       it: {
-        uiLanguage: 'Lingua della pagina',
+        uiLanguage: 'Lingua della pagina:',
         pageTitle: 'Intenzioni',
         pageLead: 'Sfoglia le intenzioni e i pacchetti SmartRosary attuali da questo repository.',
         summaryLabel: 'Riepilogo',
@@ -597,6 +640,7 @@
         source: 'Sorgente',
         file: 'File',
         footer: 'Dati generati dai file JSON del repository.',
+        deployLabel: 'Ultima pubblicazione',
         loadError: 'Impossibile caricare i dati delle intenzioni.',
         singleType: 'Singola',
         packageType: 'Pacchetto',
@@ -604,7 +648,7 @@
         countMany: '{n} intenzioni',
       },
       pt: {
-        uiLanguage: 'Idioma da página',
+        uiLanguage: 'Idioma da página:',
         pageTitle: 'Intenções',
         pageLead: 'Veja as intenções e os pacotes SmartRosary atuais deste repositório.',
         summaryLabel: 'Resumo',
@@ -624,6 +668,7 @@
         source: 'Fonte',
         file: 'Arquivo',
         footer: 'Dados gerados a partir dos arquivos JSON do repositório.',
+        deployLabel: 'Última publicação',
         loadError: 'Não foi possível carregar os dados de intenções.',
         singleType: 'Individual',
         packageType: 'Pacote',
@@ -631,7 +676,7 @@
         countMany: '{n} intenções',
       },
       la: {
-        uiLanguage: 'Lingua paginae',
+        uiLanguage: 'Lingua paginae:',
         pageTitle: 'Intentiones',
         pageLead: 'Inspice intentiones et fasciculos SmartRosary ex hoc repositorio.',
         summaryLabel: 'Summarium',
@@ -651,6 +696,7 @@
         source: 'Fons',
         file: 'Archivum',
         footer: 'Data ex fasciculis JSON repositorii generata.',
+        deployLabel: 'Ultima publicatio',
         loadError: 'Data intentionum legi non potuerunt.',
         singleType: 'Singula',
         packageType: 'Fasciculus',
@@ -703,7 +749,23 @@
       $('search').placeholder = t('searchPlaceholder');
       $('entrySelectLabel').textContent = t('entrySelect');
       $('emptyState').textContent = t('empty');
+      setDeployInfo();
       render();
+    }
+
+    function setDeployInfo() {
+      const ts = new Date(document.lastModified);
+      const formatted = Number.isNaN(ts.getTime())
+        ? ''
+        : ts.toLocaleString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+      $('deployInfo').setAttribute('aria-label', t('deployLabel'));
+      $('deployInfo').textContent = formatted ? `${t('deployLabel')}: ${formatted}` : '';
     }
 
     function searchableText(item) {
@@ -737,7 +799,6 @@
       $('statSingles').textContent = summary.singles ?? 0;
       $('statPackages').textContent = summary.packages ?? 0;
       $('statEntries').textContent = summary.entries ?? 0;
-      $('footerText').textContent = t('footer');
     }
 
     function renderItemSelect(items) {
